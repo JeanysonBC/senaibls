@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação: Arquitetura de Hardware e Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+        .slide {
+            min-height: calc(100vh - 128px); /* Full height minus header and footer */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: none; /* Initially hidden */
+            align-items: center;
+            justify-content: center;
+        }
+        .slide.active {
+            opacity: 1;
+            display: flex;
+        }
+        .aula-button.active {
+            background-color: #22d3ee; /* cyan-400 */
+            color: #0f172a; /* slate-900 */
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-300 flex flex-col h-screen">
+
+    <!-- Header Navigation -->
+    <header class="w-full bg-slate-800 border-b border-slate-700 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center h-16">
+            <nav class="flex items-center space-x-1 md:space-x-2">
+                <button data-aula="1" class="aula-button active px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 1</button>
+                <button data-aula="2" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 2</button>
+                <button data-aula="3" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 3</button>
+                <button data-aula="4" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 4</button>
+                <button data-aula="5" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 5</button>
+                <button data-aula="6" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 6</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow overflow-y-auto">
+        <!-- AULA 1 -->
+        <div class="aula-page" data-aula="1">
+            <div class="slide active p-8">
+                <div class="text-center max-w-4xl">
+                    <h2 class="text-3xl font-bold text-cyan-400 mb-6">Introdução à Unidade Curricular</h2>
+                    <p class="text-lg text-slate-300 mb-4 text-justify">A Arquitetura de Hardware e Software é o estudo integrado daquilo que constitui a base de todo sistema computacional. O hardware oferece os <strong class="text-white">recursos físicos</strong> — processadores, memória, dispositivos de entrada/saída — enquanto o software provê as <strong class="text-white">instruções lógicas</strong> que controlam esses recursos. A disciplina busca desenvolver no estudante uma <strong class="text-white">visão sistêmica</strong>, permitindo compreender como as decisões de projeto em hardware influenciam no desempenho de softwares e, por consequência, nos serviços de Internet.</p>
+                    <p class="text-lg text-slate-300 text-justify">De acordo com Tanenbaum e Austin (2013), esse entendimento é essencial para profissionais de TI que precisam atuar desde a configuração de servidores até a otimização de aplicações web, pois a eficiência final depende da harmonia entre os dois níveis.</p>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-cyan-400 mb-6">O que é Hardware</h2>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">Hardware refere-se ao <strong class="text-white">conjunto físico</strong> de um sistema de computação. Inclui placas eletrônicas, chips, cabos, conectores e dispositivos periféricos. Sem ele, não há suporte para que instruções sejam processadas.</p>
+                        <p class="text-lg text-slate-300 text-justify">Para fins didáticos, podemos pensar no hardware como o <strong class="text-white">“corpo” do computador</strong>, responsável por dar forma e suporte, enquanto o software representa a <strong class="text-white">“mente”</strong>, com as ideias e instruções. Um exemplo cotidiano: em um smartphone, a tela, bateria e processador são hardware; já o aplicativo de mensagens é software. A combinação dos dois torna o uso possível.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" alt="Componentes de hardware de um computador" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-cyan-400 mb-6">O Processador (CPU)</h2>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">O processador, também conhecido como <strong class="text-white">CPU (Central Processing Unit)</strong>, é o cérebro do computador. Sua função é executar as instruções de programas, realizando cálculos e gerenciando o fluxo de dados. Ele segue um ciclo contínuo de operações: <strong class="text-white">busca (fetch)</strong>, <strong class="text-white">decodificação (decode)</strong> e <strong class="text-white">execução (execute)</strong>.</p>
+                        <p class="text-lg text-slate-300 text-justify">O desempenho de uma CPU não depende apenas de sua velocidade (clock), mas também de sua arquitetura. O conceito de <strong class="text-white">IPC (Instruções Por Ciclo)</strong> é fundamental: um processador com IPC maior pode executar mais tarefas em um mesmo ciclo de clock. O desempenho efetivo é resultado da multiplicação entre <strong class="text-white">IPC x Frequência</strong>.</p>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Fetch-execute_cycle_pt.svg/1200px-Fetch-execute_cycle_pt.svg.png" alt="Diagrama do ciclo Fetch-Decode-Execute" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-left max-w-4xl">
+                    <h2 class="text-3xl font-bold text-cyan-400 mb-6 text-center">Tipos de Processadores</h2>
+                    <ul class="list-disc list-inside space-y-4">
+                       <li class="text-lg text-slate-300 text-justify"><strong class="text-white">Desktop/Servidor:</strong> Foco em desempenho bruto, com múltiplos núcleos e altas frequências. Exemplos: Intel Core i9, AMD EPYC.</li>
+                       <li class="text-lg text-slate-300 text-justify"><strong class="text-white">Mobile:</strong> Otimizados para baixo consumo de energia, essenciais para a autonomia da bateria. Usam a arquitetura ARM.</li>
+                       <li class="text-lg text-slate-300 text-justify"><strong class="text-white">Embarcados:</strong> Projetados para tarefas específicas em dispositivos como IoT, eletrodomésticos e sistemas automotivos.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-cyan-400 mb-6">Frequência (Clock)</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">A frequência, ou clock, é medida em hertz (Hz) e indica quantos ciclos de operações um processador realiza por segundo. Um processador de 3 GHz, por exemplo, realiza <strong class="text-white">3 bilhões de ciclos por segundo</strong>.</p>
+                     <p class="text-lg text-slate-300 text-justify">Contudo, a frequência <strong class="text-white">não é sinônimo de desempenho</strong>. Uma arquitetura mais eficiente pode entregar mais performance com um clock menor. O overclocking é a prática de aumentar a frequência manualmente, mas exige refrigeração adequada.</p>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                    <h2 class="text-3xl font-bold text-cyan-400 mb-6">Núcleos (Multicore)</h2>
+                    <p class="text-lg text-slate-300 mb-4 text-justify">Processadores modernos são <strong class="text-white">multicore</strong>, integrando vários “cérebros” (núcleos) em um único chip. Isso permite a execução de múltiplas tarefas em paralelo (multitarefa) ou a divisão de uma tarefa complexa entre vários núcleos.</p>
+                    <p class="text-lg text-slate-300 text-justify">Essa abordagem é ideal para aplicações como edição de vídeo e jogos. O ganho de desempenho, no entanto, é limitado pela <strong class="text-white">Lei de Amdahl</strong>, que afirma que o ganho de velocidade é limitado pela parte sequencial do programa.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="aula-page hidden" data-aula="2">
+             <div class="slide active p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-teal-400 mb-6">Memória (tipos)</h2>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">A memória é hierárquica, organizada em níveis de velocidade e custo. <strong class="text-white">RAM (Random Access Memory)</strong> é volátil e rápida. <strong class="text-white">ROM (Read-Only Memory)</strong> é permanente, para firmware. <strong class="text-white">Cache (L1, L2, L3)</strong> reduz o tempo de acesso da CPU aos dados.</p>
+                         <p class="text-lg text-slate-300 text-justify">Em dispositivos móveis, usa-se <strong class="text-white">LPDDR (Low Power DDR)</strong> para equilibrar velocidade e consumo de energia.</p>
+                    </div>
+                    <img src="https://drive.google.com/file/d/1yF-JyRwo5EOY8RVbWdTlcejyulCdvCh1/view" alt="Diagrama da hierarquia de memória" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-teal-400 mb-6">Capacidade de Armazenamento</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Medida em bytes e seus múltiplos (KB, MB, GB, TB). Um arquivo de texto tem poucos KB; 1 GB armazena cerca de 200 músicas MP3.</p>
+                     <p class="text-lg text-slate-300 text-justify">Em data centers, a escala chega a <strong class="text-white">petabytes</strong>, exigindo tecnologias de armazenamento distribuído como RAID, SAN e NAS.</p>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-teal-400 mb-6">Frequência da Memória</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Medida em MHz ou MT/s. Siglas como DDR3, DDR4 e DDR5 indicam gerações com maior velocidade. Uma memória DDR4-3200 realiza <strong class="text-white">3,2 bilhões de transferências de dados por segundo</strong>.</p>
+                     <p class="text-lg text-slate-300 text-justify">A velocidade da memória impacta o desempenho de aplicações que dependem de acesso rápido a dados, como gráficos integrados, jogos e IA.</p>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-teal-400 mb-6">Periféricos</h2>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">Dispositivos que servem como meio de interação com o computador. São classificados como:</p>
+                        <ul class="list-disc list-inside space-y-2 mt-4 text-lg">
+                            <li class="text-justify"><strong class="text-white">Entrada:</strong> teclado, mouse.</li>
+                            <li class="text-justify"><strong class="text-white">Saída:</strong> monitor, impressora.</li>
+                            <li class="text-justify"><strong class="text-white">Entrada/Saída:</strong> pen drive, tela touch.</li>
+                        </ul>
+                        <p class="text-lg text-slate-300 text-justify mt-4">Em IoT, o conceito se expande para sensores, câmeras e atuadores.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1618384887924-a6c384a37657?q=80&w=2070&auto=format&fit=crop" alt="Imagem com exemplos de periféricos de computador" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-teal-400 mb-6">Armazenamento: HD vs SSD</h2>
+                        <ul class="list-disc list-inside space-y-4 text-lg">
+                            <li class="text-justify"><strong class="text-white">HD (Hard Disk Drive):</strong> usa discos magnéticos para gravar dados. É mais barato e oferece alta capacidade, mas é mais lento e sensível a impactos.</li>
+                            <li class="text-justify"><strong class="text-white">SSD (Solid State Drive):</strong> usa memória flash. É até 10x mais rápido que um HD, mais durável e silencioso. Um PC com SSD inicializa o SO em segundos.</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1593439193405-021b1814b74f?q=80&w=2070&auto=format&fit=crop" alt="Imagem comparando um HD e um SSD lado a lado" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-teal-400 mb-6">Portas de Comunicação</h2>
+                        <ul class="list-disc list-inside space-y-2 text-lg">
+                            <li class="text-justify"><strong class="text-white">USB:</strong> Padrão universal para periféricos.</li>
+                            <li class="text-justify"><strong class="text-white">Ethernet:</strong> Para redes cabeadas.</li>
+                            <li class="text-justify"><strong class="text-white">Wi-Fi/Bluetooth:</strong> Para redes sem fio.</li>
+                            <li class="text-justify"><strong class="text-white">Portas de Áudio e Vídeo (HDMI):</strong> Para transmissão de som e imagem.</li>
+                        </ul>
+                        <p class="text-lg text-slate-300 text-justify mt-4">A evolução para <strong class="text-white">USB-C</strong> trouxe padronização de conectores, dados e energia.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1587831990711-23d72c9d7163?q=80&w=1932&auto=format&fit=crop" alt="Imagem de várias portas de comunicação na traseira de um computador" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
+                </div>
+            </div>
+        </div>
+        
+        <div class="aula-page hidden" data-aula="3">
+            <div class="slide active p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-purple-400 mb-6">O que é Software</h2>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">É o conjunto de <strong class="text-white">instruções e dados</strong> que dizem ao hardware o que fazer. Sem ele, o hardware é inerte. Divide-se em <strong class="text-white">software de sistema</strong> e <strong class="text-white">software de aplicação</strong>.</p>
+                        <p class="text-lg text-slate-300 text-justify">A interação entre eles forma uma pirâmide, com o hardware na base, o software de sistema no meio e os aplicativos no topo, mais próximos do usuário.</p>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Operating_system_placement-pt.svg/1200px-Operating_system_placement-pt.svg.png" alt="Diagrama mostrando a relação entre Usuário, Aplicação, Sistema Operacional e Hardware" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-purple-400 mb-6">Software Básico</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">É o software indispensável para operar o hardware. Inclui:</p>
+                     <ul class="list-disc list-inside space-y-2 mt-4 text-lg text-left max-w-xl mx-auto">
+                        <li class="text-justify"><strong class="text-white">Firmware (BIOS/UEFI):</strong> Responsável pela inicialização do sistema.</li>
+                        <li class="text-justify"><strong class="text-white">Sistemas Operacionais (SO):</strong> Gerenciam os recursos do computador.</li>
+                        <li class="text-justify"><strong class="text-white">Drivers:</strong> Permitem a comunicação entre o SO e o hardware.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-purple-400 mb-6">Sistemas Operacionais</h2>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">É um <strong class="text-white">gerente de recursos</strong> que controla processos, memória, arquivos e dispositivos. Ele provê uma interface entre o usuário e o hardware.</p>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">Exemplos:</p>
+                        <ul class="list-disc list-inside space-y-2 text-lg">
+                            <li class="text-justify"><strong class="text-white">Windows</strong> (desktop)</li>
+                            <li class="text-justify"><strong class="text-white">Linux</strong> (servidores, embarcados)</li>
+                            <li class="text-justify"><strong class="text-white">macOS</strong> (Apple)</li>
+                            <li class="text-justify"><strong class="text-white">Android/iOS</strong> (móveis)</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1622308331195-f5f3a763f35f?q=80&w=2070&auto=format&fit=crop" alt="Imagem com os logos dos sistemas operacionais Windows, macOS e Linux" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-purple-400 mb-6">Drivers</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Pequenos softwares que funcionam como uma <strong class="text-white">ponte entre o SO e o hardware</strong>. Cada dispositivo (placa de vídeo, impressora) precisa de um driver para que o SO saiba como controlá-lo.</p>
+                     <p class="text-lg text-slate-300 text-justify">Eles operam em <strong class="text-white">nível de kernel</strong> (núcleo do SO), com alto privilégio de acesso ao sistema.</p>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-purple-400 mb-6">Aplicativos: Prontos vs. Customizados</h2>
+                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify"><strong class="text-white">Prontos (off-the-shelf):</strong> Feitos para o público geral. Ex: navegador Chrome, pacote Office.</li>
+                        <li class="text-justify"><strong class="text-white">Customizados:</strong> Desenvolvidos sob medida para as necessidades de uma empresa. Ex: sistema de gestão hospitalar, plataforma de e-commerce.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="aula-page hidden" data-aula="4">
+            <div class="slide active p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-rose-400 mb-6">Livre vs. Proprietário</h2>
+                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify"><strong class="text-white">Software Livre:</strong> Garante 4 liberdades (executar, estudar, modificar, distribuir). Ex: Linux, LibreOffice. <strong class="text-white">"Livre" não é sinônimo de "gratuito"</strong>.</li>
+                        <li class="text-justify"><strong class="text-white">Software Proprietário:</strong> O uso é restrito por uma licença, e o código-fonte não é acessível. Ex: Windows, Photoshop.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-rose-400 mb-6">Licenças e Distribuição</h2>
+                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify"><strong class="text-white">Uso Perpétuo:</strong> O cliente compra o direito de usar uma versão do software indefinidamente.</li>
+                        <li class="text-justify"><strong class="text-white">Assinaturas:</strong> O uso é condicionado a pagamentos recorrentes (mensais/anuais). Ex: Office 365, Netflix.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-rose-400 mb-6">Copyright vs. Copyleft</h2>
+                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify"><strong class="text-white">Copyright:</strong> Protege a autoria de uma obra (software, texto), dando ao autor direitos exclusivos sobre sua distribuição.</li>
+                        <li class="text-justify"><strong class="text-white">Copyleft:</strong> Usa o copyright para garantir que versões modificadas de um software livre mantenham as mesmas liberdades do original (ex: GNU GPL).</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-rose-400 mb-6">Creative Commons (CC)</h2>
+                        <p class="text-lg text-slate-300 text-justify mb-4">São licenças voltadas para obras criativas (textos, imagens, vídeos), permitindo que autores compartilhem seu trabalho com flexibilidade. Combinações incluem:</p>
+                        <ul class="list-disc list-inside space-y-2 mt-4 text-lg">
+                            <li class="text-justify"><strong class="text-white">BY</strong> (atribuição)</li>
+                            <li class="text-justify"><strong class="text-white">NC</strong> (não comercial)</li>
+                            <li class="text-justify"><strong class="text-white">ND</strong> (sem derivações)</li>
+                            <li class="text-justify"><strong class="text-white">SA</strong> (compartilha igual)</li>
+                        </ul>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Creative_Commons_license_spectrum.svg/1280px-Creative_Commons_license_spectrum.svg.png" alt="Espectro das licenças Creative Commons" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
+                </div>
+            </div>
+        </div>
+        
+        <div class="aula-page hidden" data-aula="5">
+             <div class="slide active p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-sky-400 mb-6">Redes de Comunicação</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">É a interconexão de dispositivos para troca de informações. Topologias (estrela, anel) definem como os dispositivos se conectam.</p>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Tipos:</p>
+                     <ul class="list-disc list-inside space-y-2 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify"><strong class="text-white">LAN (Local Area Network):</strong> Rede local, como em uma casa ou escritório.</li>
+                        <li class="text-justify"><strong class="text-white">WAN (Wide Area Network):</strong> Rede de longa distância, como a própria Internet.</li>
+                        <li class="text-justify"><strong class="text-white">MAN (Metropolitan Area Network):</strong> Rede que abrange uma cidade.</li>
+                    </ul>
+                </div>
+            </div>
+             <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-sky-400 mb-6">Arquitetura Cliente/Servidor vs P2P</h2>
+                        <ul class="list-disc list-inside space-y-4 text-lg">
+                            <li class="text-justify">No modelo <strong class="text-white">cliente/servidor</strong>, o cliente solicita e o servidor responde. Garante centralização e controle.</li>
+                            <li class="text-justify">Na alternativa <strong class="text-white">P2P (peer-to-peer)</strong>, cada dispositivo pode atuar como cliente e servidor. Usada em redes de compartilhamento como BitTorrent.</li>
+                        </ul>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Client-server-model.svg/1200px-Client-server-model.svg.png" alt="Diagrama da arquitetura Cliente-Servidor" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-sky-400 mb-6">Ativos de Rede</h2>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">Equipamentos físicos:</p>
+                        <ul class="list-disc list-inside space-y-2 mt-4 text-lg">
+                            <li class="text-justify"><strong class="text-white">Switches:</strong> Ligam dispositivos em uma LAN.</li>
+                            <li class="text-justify"><strong class="text-white">Roteadores:</strong> Conectam diferentes redes, como sua casa à Internet.</li>
+                            <li class="text-justify"><strong class="text-white">Firewalls:</strong> Filtram o tráfego por segurança.</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1605330353982-3b56a3e5c3e0?q=80&w=2070&auto=format&fit=crop" alt="Imagem de um switch de rede com cabos conectados" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-sky-400 mb-6">Computação em Nuvem</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Modelo de <strong class="text-white">acesso sob demanda</strong> a um conjunto compartilhado de recursos computacionais (rede, servidores, armazenamento) via Internet.</p>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Características:</p>
+                     <ul class="list-disc list-inside space-y-2 mt-4 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify">Autoatendimento</li>
+                        <li class="text-justify"><strong class="text-white">Elasticidade</strong> (aumentar/diminuir recursos)</li>
+                        <li class="text-justify"><strong class="text-white">Pagamento sob uso</strong></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-sky-400 mb-6">IaaS, PaaS e SaaS</h2>
+                         <ul class="list-disc list-inside space-y-4">
+                           <li class="text-lg text-slate-300 text-justify"><strong class="text-white">IaaS (Infraestrutura):</strong> servidores virtuais. Ex: Amazon EC2.</li>
+                           <li class="text-lg text-slate-300 text-justify"><strong class="text-white">PaaS (Plataforma):</strong> ambiente para desenvolver e hospedar apps. Ex: Heroku.</li>
+                           <li class="text-lg text-slate-300 text-justify"><strong class="text-white">SaaS (Software):</strong> aplicativo pronto para uso. Ex: Google Drive.</li>
+                        </ul>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Cloud_computing_layers.svg/1200px-Cloud_computing_layers.svg.png" alt="Diagrama dos modelos de serviço em nuvem: IaaS, PaaS e SaaS" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
+                </div>
+            </div>
+        </div>
+
+        <div class="aula-page hidden" data-aula="6">
+            <div class="slide active p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-amber-400 mb-6">Dispositivos Móveis</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Combinam mobilidade, conectividade e múltiplas funções (câmera, GPS). Sua arquitetura prioriza <strong class="text-white">eficiência energética</strong>.</p>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Características:</p>
+                     <ul class="list-disc list-inside space-y-2 mt-4 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify">Tela sensível ao toque</li>
+                        <li class="text-justify">Bateria</li>
+                        <li class="text-justify"><strong class="text-white">Interação multimodal</strong> (toque, voz, gestos)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-amber-400 mb-6">Arquiteturas Móveis: ARM vs x86</h2>
+                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify"><strong class="text-white">ARM:</strong> Baseada em RISC (conjunto reduzido de instruções), eficiente em energia, domina em smartphones.</li>
+                        <li class="text-justify"><strong class="text-white">x86:</strong> Arquitetura CISC (conjunto complexo), usada em PCs, com maior desempenho bruto e maior consumo de energia.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-amber-400 mb-6">Sensores</h2>
+                        <p class="text-lg text-slate-300 mb-4 text-justify">Tornam os dispositivos “inteligentes” e cientes do contexto:</p>
+                        <ul class="list-disc list-inside space-y-2 mt-4 text-lg">
+                            <li class="text-justify"><strong class="text-white">Acelerômetro</strong> (orientação)</li>
+                            <li class="text-justify"><strong class="text-white">Giroscópio</strong> (rotação)</li>
+                            <li class="text-justify"><strong class="text-white">GPS</strong> (localização)</li>
+                            <li class="text-justify"><strong class="text-white">Luz ambiente</strong></li>
+                            <li class="text-justify"><strong class="text-white">Biometria</strong> (impressão digital)</li>
+                        </ul>
+                    </div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Infographics_of_sensors_in_smartphone.jpg" alt="Infográfico mostrando os diversos sensores presentes em um smartphone" class="w-full h-auto max-h-[400px] object-contain rounded-lg">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-center max-w-4xl">
+                     <h2 class="text-3xl font-bold text-amber-400 mb-6">Conectividade</h2>
+                     <ul class="list-disc list-inside space-y-2 text-lg text-left max-w-2xl mx-auto">
+                        <li class="text-justify">Redes móveis (<strong class="text-white">4G, 5G</strong>)</li>
+                        <li class="text-justify"><strong class="text-white">Wi-Fi</strong></li>
+                        <li class="text-justify"><strong class="text-white">Bluetooth</strong> (curto alcance)</li>
+                        <li class="text-justify"><strong class="text-white">NFC</strong> (pagamentos por aproximação)</li>
+                    </ul>
+                     <p class="text-lg text-slate-300 text-justify mt-4">O 5G promete menor latência, permitindo o avanço de IoT e carros autônomos.</p>
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
+                    <div class="text-left">
+                        <h2 class="text-3xl font-bold text-amber-400 mb-6">Óculos de RA e RV</h2>
+                        <ul class="list-disc list-inside space-y-4 text-lg">
+                            <li class="text-justify"><strong class="text-white">Realidade Aumentada (RA):</strong> Sobrepõe elementos digitais ao mundo real. Ex: Pokémon GO.</li>
+                            <li class="text-justify"><strong class="text-white">Realidade Virtual (RV):</strong> Cria um ambiente totalmente imersivo. Ex: jogos em Oculus Rift.</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1535016120720-40c646be5580?q=80&w=2070&auto=format&fit=crop" alt="Pessoa utilizando um óculos de Realidade Virtual em um ambiente escuro" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
+                </div>
+            </div>
+            <div class="slide p-8">
+                <div class="text-left max-w-4xl">
+                    <h2 class="text-3xl font-bold text-amber-400 mb-6 text-center">Revisão e Atividade Final</h2>
+                     <p class="text-lg text-slate-300 mb-4 text-justify">Revisão geral:</p>
+                     <ul class="list-disc list-inside space-y-2 text-lg mb-6">
+                        <li class="text-justify">Hardware: CPU, memória, periféricos.</li>
+                        <li class="text-justify">Software: SO, drivers, licenças.</li>
+                        <li class="text-justify">Redes: cliente/servidor, ativos de rede.</li>
+                        <li class="text-justify">Cloud: IaaS, PaaS e SaaS.</li>
+                        <li class="text-justify">Dispositivos móveis: arquiteturas e sensores.</li>
+                        <li class="text-justify">RA/RV: aplicações práticas.</li>
+                    </ul>
+                     <p class="text-lg text-slate-300 text-justify"><strong class="text-white">Atividade Final (em grupos):</strong> Escolher um cenário prático e aplicar os conceitos aprendidos (hardware, software, rede, cloud, mobile/RA/RV). Apresentar em formato de miniprojeto.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Navigation -->
+    <footer class="w-full bg-slate-800 border-t border-slate-700 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+            <button id="prev-btn" class="px-4 py-2 bg-slate-700 rounded-md hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">&lt; Anterior</button>
+            <div id="slide-counter" class="text-sm font-medium"></div>
+            <button id="next-btn" class="px-4 py-2 bg-slate-700 rounded-md hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Próximo &gt;</button>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const aulaButtons = document.querySelectorAll('.aula-button');
+            const aulaPages = document.querySelectorAll('.aula-page');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const slideCounter = document.getElementById('slide-counter');
+
+            let currentAula = 1;
+            let currentSlideIndex = 0;
+
+            function updateView() {
+                // Hide all pages
+                aulaPages.forEach(page => page.classList.add('hidden'));
+                
+                // Show current page
+                const currentPage = document.querySelector(`.aula-page[data-aula="${currentAula}"]`);
+                if (!currentPage) return;
+                currentPage.classList.remove('hidden');
+
+                const slides = currentPage.querySelectorAll('.slide');
+                if (slides.length === 0) return;
+
+                // Hide all slides in current page
+                slides.forEach((slide, index) => {
+                    if (index === currentSlideIndex) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.classList.remove('active');
+                    }
+                });
+
+                // Update counter
+                slideCounter.textContent = `${currentSlideIndex + 1} / ${slides.length}`;
+
+                // Update buttons
+                prevBtn.disabled = currentSlideIndex === 0;
+                nextBtn.disabled = currentSlideIndex === slides.length - 1;
+
+                // Update active aula button
+                 aulaButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if(btn.dataset.aula == currentAula) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            aulaButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    currentAula = parseInt(button.dataset.aula);
+                    currentSlideIndex = 0;
+                    updateView();
+                });
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentSlideIndex > 0) {
+                    currentSlideIndex--;
+                    updateView();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const slides = document.querySelector(`.aula-page[data-aula="${currentAula}"]`).querySelectorAll('.slide');
+                if (currentSlideIndex < slides.length - 1) {
+                    currentSlideIndex++;
+                    updateView();
+                }
+            });
+
+            // Initial view
+            updateView();
+        });
+    </script>
+</body>
+</html>
+
