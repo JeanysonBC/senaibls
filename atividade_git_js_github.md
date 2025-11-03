@@ -190,29 +190,6 @@ git log --oneline --graph --decorate --all
 
 ---
 
-## 🧮 Critérios de Avaliação
-
-| Critério | Peso | Descrição |
-|-----------|-------|-----------|
-| **Git** | 30% | init, commits claros, `.gitignore`, histórico limpo |
-| **Branches/Merge** | 20% | criação de feature, merge bem estruturado |
-| **Código JS** | 30% | funcionamento correto, uso de funções e validação |
-| **GitHub** | 20% | push via SSH, PR criado (opcional) |
-
----
-
-## 💡 Desafios Opcionais
-
-- Criar um script `npm run test` para validar a saída.  
-- Adicionar um **GitHub Action** que rode `node app.js 1 2 3` a cada push.  
-- Criar uma **tag e release**:
-  ```bash
-  git tag v1.0.0
-  git push origin v1.0.0
-  ```
-
----
-
 ## 🧰 Dicas rápidas
 
 - Verifique o Node:
@@ -230,6 +207,4 @@ git log --oneline --graph --decorate --all
 
 ---
 
-📅 **Tempo estimado:** 60 a 90 minutos  
-👨‍💻 **Nível:** Iniciante a Intermediário  
-🏁 **Resultado final:** Projeto JavaScript funcional publicado no GitHub com histórico Git completo.
+
