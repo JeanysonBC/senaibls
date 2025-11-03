@@ -1,511 +1,872 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apresentação: Arquitetura de Hardware e Software</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        html, body {
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Inter', sans-serif;
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia Completo do Git</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100%;
         }
-        .slide {
-            min-height: calc(100vh - 128px); /* Full height minus header and footer */
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            display: none; /* Initially hidden */
-            align-items: center;
-            justify-content: center;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        .slide.active {
-            opacity: 1;
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
         }
-        .aula-button.active {
-            background-color: #22d3ee; /* cyan-400 */
-            color: #0f172a; /* slate-900 */
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4f46e5;
         }
-    </style>
-</head>
-<body class="bg-slate-900 text-slate-300 flex flex-col h-screen">
 
-    <!-- Header Navigation -->
-    <header class="w-full bg-slate-800 border-b border-slate-700 z-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center h-16">
-            <nav class="flex items-center space-x-1 md:space-x-2">
-                <button data-aula="1" class="aula-button active px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 1</button>
-                <button data-aula="2" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 2</button>
-                <button data-aula="3" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 3</button>
-                <button data-aula="4" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 4</button>
-                <button data-aula="5" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 5</button>
-                <button data-aula="6" class="aula-button px-3 py-2 rounded-md text-sm font-medium transition-colors">Aula 6</button>
-            </nav>
-        </div>
-    </header>
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-    <main class="flex-grow overflow-y-auto">
-        <!-- AULA 1 -->
-        <div class="aula-page" data-aula="1">
-            <div class="slide active p-8">
-                <div class="text-center max-w-4xl">
-                    <h2 class="text-3xl font-bold text-cyan-400 mb-6">Introdução à Unidade Curricular</h2>
-                    <p class="text-lg text-slate-300 mb-4 text-justify">A Arquitetura de Hardware e Software é o estudo integrado daquilo que constitui a base de todo sistema computacional. O hardware oferece os <strong class="text-white">recursos físicos</strong> — processadores, memória, dispositivos de entrada/saída — enquanto o software provê as <strong class="text-white">instruções lógicas</strong> que controlam esses recursos. A disciplina busca desenvolver no estudante uma <strong class="text-white">visão sistêmica</strong>, permitindo compreender como as decisões de projeto em hardware influenciam no desempenho de softwares e, por consequência, nos serviços de Internet.</p>
-                    <p class="text-lg text-slate-300 text-justify">De acordo com Tanenbaum e Austin (2013), esse entendimento é essencial para profissionais de TI que precisam atuar desde a configuração de servidores até a otimização de aplicações web, pois a eficiência final depende da harmonia entre os dois níveis.</p>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-cyan-400 mb-6">O que é Hardware</h2>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">Hardware refere-se ao <strong class="text-white">conjunto físico</strong> de um sistema de computação. Inclui placas eletrônicas, chips, cabos, conectores e dispositivos periféricos. Sem ele, não há suporte para que instruções sejam processadas.</p>
-                        <p class="text-lg text-slate-300 text-justify">Para fins didáticos, podemos pensar no hardware como o <strong class="text-white">“corpo” do computador</strong>, responsável por dar forma e suporte, enquanto o software representa a <strong class="text-white">“mente”</strong>, com as ideias e instruções. Um exemplo cotidiano: em um smartphone, a tela, bateria e processador são hardware; já o aplicativo de mensagens é software. A combinação dos dois torna o uso possível.</p>
-                    </div>
-                    <img src="img/hardware.jpg" alt="Componentes de hardware de um computador" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-cyan-400 mb-6">O Processador (CPU)</h2>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">O processador, também conhecido como <strong class="text-white">CPU (Central Processing Unit)</strong>, é o cérebro do computador. Sua função é executar as instruções de programas, realizando cálculos e gerenciando o fluxo de dados. Ele segue um ciclo contínuo de operações: <strong class="text-white">busca (fetch)</strong>, <strong class="text-white">decodificação (decode)</strong> e <strong class="text-white">execução (execute)</strong>.</p>
-                        <p class="text-lg text-slate-300 text-justify">O desempenho de uma CPU não depende apenas de sua velocidade (clock), mas também de sua arquitetura. O conceito de <strong class="text-white">IPC (Instruções Por Ciclo)</strong> é fundamental: um processador com IPC maior pode executar mais tarefas em um mesmo ciclo de clock. O desempenho efetivo é resultado da multiplicação entre <strong class="text-white">IPC x Frequência</strong>.</p>
-                    </div>
-                    <img src="img/cliclo_fetch.jpg" alt="Diagrama do ciclo Fetch-Decode-Execute" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-left max-w-4xl">
-                    <h2 class="text-3xl font-bold text-cyan-400 mb-6 text-center">Tipos de Processadores</h2>
-                    <ul class="list-disc list-inside space-y-4">
-                       <li class="text-lg text-slate-300 text-justify"><strong class="text-white">Desktop/Servidor:</strong> Foco em desempenho bruto, com múltiplos núcleos e altas frequências. Exemplos: Intel Core i9, AMD EPYC.</li>
-                       <li class="text-lg text-slate-300 text-justify"><strong class="text-white">Mobile:</strong> Otimizados para baixo consumo de energia, essenciais para a autonomia da bateria. Usam a arquitetura ARM.</li>
-                       <li class="text-lg text-slate-300 text-justify"><strong class="text-white">Embarcados:</strong> Projetados para tarefas específicas em dispositivos como IoT, eletrodomésticos e sistemas automotivos.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-cyan-400 mb-6">Frequência (Clock)</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">A frequência, ou clock, é medida em hertz (Hz) e indica quantos ciclos de operações um processador realiza por segundo. Um processador de 3 GHz, por exemplo, realiza <strong class="text-white">3 bilhões de ciclos por segundo</strong>.</p>
-                     <p class="text-lg text-slate-300 text-justify">Contudo, a frequência <strong class="text-white">não é sinônimo de desempenho</strong>. Uma arquitetura mais eficiente pode entregar mais performance com um clock menor. O overclocking é a prática de aumentar a frequência manualmente, mas exige refrigeração adequada.</p>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                    <h2 class="text-3xl font-bold text-cyan-400 mb-6">Núcleos (Multicore)</h2>
-                    <p class="text-lg text-slate-300 mb-4 text-justify">Processadores modernos são <strong class="text-white">multicore</strong>, integrando vários “cérebros” (núcleos) em um único chip. Isso permite a execução de múltiplas tarefas em paralelo (multitarefa) ou a divisão de uma tarefa complexa entre vários núcleos.</p>
-                    <p class="text-lg text-slate-300 text-justify">Essa abordagem é ideal para aplicações como edição de vídeo e jogos. O ganho de desempenho, no entanto, é limitado pela <strong class="text-white">Lei de Amdahl</strong>, que afirma que o ganho de velocidade é limitado pela parte sequencial do programa.</p>
-                </div>
-            </div>
-        </div>
+        .nav-link {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
 
-        <div class="aula-page hidden" data-aula="2">
-             <div class="slide active p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-teal-400 mb-6">Memória (tipos)</h2>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">A memória é hierárquica, organizada em níveis de velocidade e custo. <strong class="text-white">RAM (Random Access Memory)</strong> é volátil e rápida. <strong class="text-white">ROM (Read-Only Memory)</strong> é permanente, para firmware. <strong class="text-white">Cache (L1, L2, L3)</strong> reduz o tempo de acesso da CPU aos dados.</p>
-                         <p class="text-lg text-slate-300 text-justify">Em dispositivos móveis, usa-se <strong class="text-white">LPDDR (Low Power DDR)</strong> para equilibrar velocidade e consumo de energia.</p>
-                    </div>
-                    <img src="img/Figura-1-Hierarquia-de-memoria.png" alt="Diagrama da hierarquia de memória" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-teal-400 mb-6">Capacidade de Armazenamento</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Medida em bytes e seus múltiplos (KB, MB, GB, TB). Um arquivo de texto tem poucos KB; 1 GB armazena cerca de 200 músicas MP3.</p>
-                     <p class="text-lg text-slate-300 text-justify">Em data centers, a escala chega a <strong class="text-white">petabytes</strong>, exigindo tecnologias de armazenamento distribuído como RAID, SAN e NAS.</p>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-teal-400 mb-6">Frequência da Memória</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Medida em MHz ou MT/s. Siglas como DDR3, DDR4 e DDR5 indicam gerações com maior velocidade. Uma memória DDR4-3200 realiza <strong class="text-white">3,2 bilhões de transferências de dados por segundo</strong>.</p>
-                     <p class="text-lg text-slate-300 text-justify">A velocidade da memória impacta o desempenho de aplicações que dependem de acesso rápido a dados, como gráficos integrados, jogos e IA.</p>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-teal-400 mb-6">Periféricos</h2>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">Dispositivos que servem como meio de interação com o computador. São classificados como:</p>
-                        <ul class="list-disc list-inside space-y-2 mt-4 text-lg">
-                            <li class="text-justify"><strong class="text-white">Entrada:</strong> teclado, mouse.</li>
-                            <li class="text-justify"><strong class="text-white">Saída:</strong> monitor, impressora.</li>
-                            <li class="text-justify"><strong class="text-white">Entrada/Saída:</strong> pen drive, tela touch.</li>
-                        </ul>
-                        <p class="text-lg text-slate-300 text-justify mt-4">Em IoT, o conceito se expande para sensores, câmeras e atuadores.</p>
-                    </div>
-                    <img src="img/Principais-perifericos-de-entrada.webp" alt="Imagem com exemplos de periféricos de computador" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-teal-400 mb-6">Armazenamento: HD vs SSD</h2>
-                        <ul class="list-disc list-inside space-y-4 text-lg">
-                            <li class="text-justify"><strong class="text-white">HD (Hard Disk Drive):</strong> usa discos magnéticos para gravar dados. É mais barato e oferece alta capacidade, mas é mais lento e sensível a impactos.</li>
-                            <li class="text-justify"><strong class="text-white">SSD (Solid State Drive):</strong> usa memória flash. É até 10x mais rápido que um HD, mais durável e silencioso. Um PC com SSD inicializa o SO em segundos.</li>
-                        </ul>
-                    </div>
-                    <img src="img/hd-ssd.jpg" alt="Imagem comparando um HD e um SSD lado a lado" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-teal-400 mb-6">Portas de Comunicação</h2>
-                        <ul class="list-disc list-inside space-y-2 text-lg">
-                            <li class="text-justify"><strong class="text-white">USB:</strong> Padrão universal para periféricos.</li>
-                            <li class="text-justify"><strong class="text-white">Ethernet:</strong> Para redes cabeadas.</li>
-                            <li class="text-justify"><strong class="text-white">Wi-Fi/Bluetooth:</strong> Para redes sem fio.</li>
-                            <li class="text-justify"><strong class="text-white">Portas de Áudio e Vídeo (HDMI):</strong> Para transmissão de som e imagem.</li>
-                        </ul>
-                        <p class="text-lg text-slate-300 text-justify mt-4">A evolução para <strong class="text-white">USB-C</strong> trouxe padronização de conectores, dados e energia.</p>
-                    </div>
-                    <img src="img/portas.jpg" alt="Imagem de várias portas de comunicação na traseira de um computador" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
-                </div>
-            </div>
-        </div>
-        
-        <div class="aula-page hidden" data-aula="3">
-            <div class="slide active p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-purple-400 mb-6">O que é Software</h2>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">É o conjunto de <strong class="text-white">instruções e dados</strong> que dizem ao hardware o que fazer. Sem ele, o hardware é inerte. Divide-se em <strong class="text-white">software de sistema</strong> e <strong class="text-white">software de aplicação</strong>.</p>
-                        <p class="text-lg text-slate-300 text-justify">A interação entre eles forma uma pirâmide, com o hardware na base, o software de sistema no meio e os aplicativos no topo, mais próximos do usuário.</p>
-                    </div>
-                    <img src="img/diagrama_user_sof_har.png" alt="Diagrama mostrando a relação entre Usuário, Aplicação, Sistema Operacional e Hardware" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-purple-400 mb-6">Software Básico</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">É o software indispensável para operar o hardware. Inclui:</p>
-                     <ul class="list-disc list-inside space-y-2 mt-4 text-lg text-left max-w-xl mx-auto">
-                        <li class="text-justify"><strong class="text-white">Firmware (BIOS/UEFI):</strong> Responsável pela inicialização do sistema.</li>
-                        <li class="text-justify"><strong class="text-white">Sistemas Operacionais (SO):</strong> Gerenciam os recursos do computador.</li>
-                        <li class="text-justify"><strong class="text-white">Drivers:</strong> Permitem a comunicação entre o SO e o hardware.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-purple-400 mb-6">Sistemas Operacionais</h2>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">É um <strong class="text-white">gerente de recursos</strong> que controla processos, memória, arquivos e dispositivos. Ele provê uma interface entre o usuário e o hardware.</p>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">Exemplos:</p>
-                        <ul class="list-disc list-inside space-y-2 text-lg">
-                            <li class="text-justify"><strong class="text-white">Windows</strong> (desktop)</li>
-                            <li class="text-justify"><strong class="text-white">Linux</strong> (servidores, embarcados)</li>
-                            <li class="text-justify"><strong class="text-white">macOS</strong> (Apple)</li>
-                            <li class="text-justify"><strong class="text-white">Android/iOS</strong> (móveis)</li>
-                        </ul>
-                    </div>
-                    <img src="img/logos.jpg" alt="Imagem com os logos dos sistemas operacionais Windows, macOS e Linux" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-purple-400 mb-6">Drivers</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Pequenos softwares que funcionam como uma <strong class="text-white">ponte entre o SO e o hardware</strong>. Cada dispositivo (placa de vídeo, impressora) precisa de um driver para que o SO saiba como controlá-lo.</p>
-                     <p class="text-lg text-slate-300 text-justify">Eles operam em <strong class="text-white">nível de kernel</strong> (núcleo do SO), com alto privilégio de acesso ao sistema.</p>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-purple-400 mb-6">Aplicativos: Prontos vs. Customizados</h2>
-                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify"><strong class="text-white">Prontos (off-the-shelf):</strong> Feitos para o público geral. Ex: navegador Chrome, pacote Office.</li>
-                        <li class="text-justify"><strong class="text-white">Customizados:</strong> Desenvolvidos sob medida para as necessidades de uma empresa. Ex: sistema de gestão hospitalar, plataforma de e-commerce.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <div class="aula-page hidden" data-aula="4">
-            <div class="slide active p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-rose-400 mb-6">Livre vs. Proprietário</h2>
-                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify"><strong class="text-white">Software Livre:</strong> Garante 4 liberdades (executar, estudar, modificar, distribuir). Ex: Linux, LibreOffice. <strong class="text-white">"Livre" não é sinônimo de "gratuito"</strong>.</li>
-                        <li class="text-justify"><strong class="text-white">Software Proprietário:</strong> O uso é restrito por uma licença, e o código-fonte não é acessível. Ex: Windows, Photoshop.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-rose-400 mb-6">Licenças e Distribuição</h2>
-                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify"><strong class="text-white">Uso Perpétuo:</strong> O cliente compra o direito de usar uma versão do software indefinidamente.</li>
-                        <li class="text-justify"><strong class="text-white">Assinaturas:</strong> O uso é condicionado a pagamentos recorrentes (mensais/anuais). Ex: Office 365, Netflix.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-rose-400 mb-6">Copyright vs. Copyleft</h2>
-                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify"><strong class="text-white">Copyright:</strong> Protege a autoria de uma obra (software, texto), dando ao autor direitos exclusivos sobre sua distribuição.</li>
-                        <li class="text-justify"><strong class="text-white">Copyleft:</strong> Usa o copyright para garantir que versões modificadas de um software livre mantenham as mesmas liberdades do original (ex: GNU GPL).</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-rose-400 mb-6">Creative Commons (CC)</h2>
-                        <p class="text-lg text-slate-300 text-justify mb-4">São licenças voltadas para obras criativas (textos, imagens, vídeos), permitindo que autores compartilhem seu trabalho com flexibilidade. Combinações incluem:</p>
-                        <ul class="list-disc list-inside space-y-2 mt-4 text-lg">
-                            <li class="text-justify"><strong class="text-white">BY</strong> (atribuição)</li>
-                            <li class="text-justify"><strong class="text-white">NC</strong> (não comercial)</li>
-                            <li class="text-justify"><strong class="text-white">ND</strong> (sem derivações)</li>
-                            <li class="text-justify"><strong class="text-white">SA</strong> (compartilha igual)</li>
-                        </ul>
-                    </div>
-                    <img src="img/licencas_CC_e_possibilidades_de_uso.png" alt="Espectro das licenças Creative Commons" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
-                </div>
-            </div>
-        </div>
-        
-        <div class="aula-page hidden" data-aula="5">
-             <div class="slide active p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-sky-400 mb-6">Redes de Comunicação</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">É a interconexão de dispositivos para troca de informações. Topologias (estrela, anel) definem como os dispositivos se conectam.</p>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Tipos:</p>
-                     <ul class="list-disc list-inside space-y-2 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify"><strong class="text-white">LAN (Local Area Network):</strong> Rede local, como em uma casa ou escritório.</li>
-                        <li class="text-justify"><strong class="text-white">WAN (Wide Area Network):</strong> Rede de longa distância, como a própria Internet.</li>
-                        <li class="text-justify"><strong class="text-white">MAN (Metropolitan Area Network):</strong> Rede que abrange uma cidade.</li>
-                    </ul>
-                </div>
-            </div>
-             <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-sky-400 mb-6">Arquitetura Cliente/Servidor vs P2P</h2>
-                        <ul class="list-disc list-inside space-y-4 text-lg">
-                            <li class="text-justify">No modelo <strong class="text-white">cliente/servidor</strong>, o cliente solicita e o servidor responde. Garante centralização e controle.</li>
-                            <li class="text-justify">Na alternativa <strong class="text-white">P2P (peer-to-peer)</strong>, cada dispositivo pode atuar como cliente e servidor. Usada em redes de compartilhamento como BitTorrent.</li>
-                        </ul>
-                    </div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Client-server-model.svg/1200px-Client-server-model.svg.png" alt="Diagrama da arquitetura Cliente-Servidor" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-sky-400 mb-6">Ativos de Rede</h2>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">Equipamentos físicos:</p>
-                        <ul class="list-disc list-inside space-y-2 mt-4 text-lg">
-                            <li class="text-justify"><strong class="text-white">Switches:</strong> Ligam dispositivos em uma LAN.</li>
-                            <li class="text-justify"><strong class="text-white">Roteadores:</strong> Conectam diferentes redes, como sua casa à Internet.</li>
-                            <li class="text-justify"><strong class="text-white">Firewalls:</strong> Filtram o tráfego por segurança.</li>
-                        </ul>
-                    </div>
-                    <img src="img/switch-gerenciavel.webp" alt="Imagem de um switch de rede com cabos conectados" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-sky-400 mb-6">Computação em Nuvem</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Modelo de <strong class="text-white">acesso sob demanda</strong> a um conjunto compartilhado de recursos computacionais (rede, servidores, armazenamento) via Internet.</p>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Características:</p>
-                     <ul class="list-disc list-inside space-y-2 mt-4 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify">Autoatendimento</li>
-                        <li class="text-justify"><strong class="text-white">Elasticidade</strong> (aumentar/diminuir recursos)</li>
-                        <li class="text-justify"><strong class="text-white">Pagamento sob uso</strong></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-sky-400 mb-6">IaaS, PaaS e SaaS</h2>
-                         <ul class="list-disc list-inside space-y-4">
-                           <li class="text-lg text-slate-300 text-justify"><strong class="text-white">IaaS (Infraestrutura):</strong> servidores virtuais. Ex: Amazon EC2.</li>
-                           <li class="text-lg text-slate-300 text-justify"><strong class="text-white">PaaS (Plataforma):</strong> ambiente para desenvolver e hospedar apps. Ex: Heroku.</li>
-                           <li class="text-lg text-slate-300 text-justify"><strong class="text-white">SaaS (Software):</strong> aplicativo pronto para uso. Ex: Google Drive.</li>
-                        </ul>
-                    </div>
-                    <img src="img/IPSaaS.png" alt="Diagrama dos modelos de serviço em nuvem: IaaS, PaaS e SaaS" class="w-full h-auto max-h-[400px] object-contain rounded-lg p-4 bg-white">
-                </div>
-            </div>
-        </div>
+        .nav-link:hover {
+            color: #4f46e5;
+        }
 
-        <div class="aula-page hidden" data-aula="6">
-            <div class="slide active p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-amber-400 mb-6">Dispositivos Móveis</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Combinam mobilidade, conectividade e múltiplas funções (câmera, GPS). Sua arquitetura prioriza <strong class="text-white">eficiência energética</strong>.</p>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Características:</p>
-                     <ul class="list-disc list-inside space-y-2 mt-4 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify">Tela sensível ao toque</li>
-                        <li class="text-justify">Bateria</li>
-                        <li class="text-justify"><strong class="text-white">Interação multimodal</strong> (toque, voz, gestos)</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-amber-400 mb-6">Arquiteturas Móveis: ARM vs x86</h2>
-                     <ul class="list-disc list-inside space-y-4 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify"><strong class="text-white">ARM:</strong> Baseada em RISC (conjunto reduzido de instruções), eficiente em energia, domina em smartphones.</li>
-                        <li class="text-justify"><strong class="text-white">x86:</strong> Arquitetura CISC (conjunto complexo), usada em PCs, com maior desempenho bruto e maior consumo de energia.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-amber-400 mb-6">Sensores</h2>
-                        <p class="text-lg text-slate-300 mb-4 text-justify">Tornam os dispositivos “inteligentes” e cientes do contexto:</p>
-                        <ul class="list-disc list-inside space-y-2 mt-4 text-lg">
-                            <li class="text-justify"><strong class="text-white">Acelerômetro</strong> (orientação)</li>
-                            <li class="text-justify"><strong class="text-white">Giroscópio</strong> (rotação)</li>
-                            <li class="text-justify"><strong class="text-white">GPS</strong> (localização)</li>
-                            <li class="text-justify"><strong class="text-white">Luz ambiente</strong></li>
-                            <li class="text-justify"><strong class="text-white">Biometria</strong> (impressão digital)</li>
-                        </ul>
-                    </div>
-                    <img src="img/sensores.jpeg" alt="Infográfico mostrando os diversos sensores presentes em um smartphone" class="w-full h-auto max-h-[400px] object-contain rounded-lg">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-center max-w-4xl">
-                     <h2 class="text-3xl font-bold text-amber-400 mb-6">Conectividade</h2>
-                     <ul class="list-disc list-inside space-y-2 text-lg text-left max-w-2xl mx-auto">
-                        <li class="text-justify">Redes móveis (<strong class="text-white">4G, 5G</strong>)</li>
-                        <li class="text-justify"><strong class="text-white">Wi-Fi</strong></li>
-                        <li class="text-justify"><strong class="text-white">Bluetooth</strong> (curto alcance)</li>
-                        <li class="text-justify"><strong class="text-white">NFC</strong> (pagamentos por aproximação)</li>
-                    </ul>
-                     <p class="text-lg text-slate-300 text-justify mt-4">O 5G promete menor latência, permitindo o avanço de IoT e carros autônomos.</p>
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl">
-                    <div class="text-left">
-                        <h2 class="text-3xl font-bold text-amber-400 mb-6">Óculos de RA e RV</h2>
-                        <ul class="list-disc list-inside space-y-4 text-lg">
-                            <li class="text-justify"><strong class="text-white">Realidade Aumentada (RA):</strong> Sobrepõe elementos digitais ao mundo real. Ex: Pokémon GO.</li>
-                            <li class="text-justify"><strong class="text-white">Realidade Virtual (RV):</strong> Cria um ambiente totalmente imersivo. Ex: jogos em Oculus Rift.</li>
-                        </ul>
-                    </div>
-                    <img src="img/ra_rv.jpeg" alt="Pessoa utilizando um óculos de Realidade Virtual em um ambiente escuro" class="w-full h-auto max-h-[400px] object-cover rounded-lg">
-                </div>
-            </div>
-            <div class="slide p-8">
-                <div class="text-left max-w-4xl">
-                    <h2 class="text-3xl font-bold text-amber-400 mb-6 text-center">Revisão e Atividade Final</h2>
-                     <p class="text-lg text-slate-300 mb-4 text-justify">Revisão geral:</p>
-                     <ul class="list-disc list-inside space-y-2 text-lg mb-6">
-                        <li class="text-justify">Hardware: CPU, memória, periféricos.</li>
-                        <li class="text-justify">Software: SO, drivers, licenças.</li>
-                        <li class="text-justify">Redes: cliente/servidor, ativos de rede.</li>
-                        <li class="text-justify">Cloud: IaaS, PaaS e SaaS.</li>
-                        <li class="text-justify">Dispositivos móveis: arquiteturas e sensores.</li>
-                        <li class="text-justify">RA/RV: aplicações práticas.</li>
-                    </ul>
-                     <p class="text-lg text-slate-300 text-justify"><strong class="text-white">Atividade Final (em grupos):</strong> Escolher um cenário prático e aplicar os conceitos aprendidos (hardware, software, rede, cloud, mobile/RA/RV). Apresentar em formato de miniprojeto.</p>
-                </div>
-            </div>
-        </div>
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+        }
 
-    </main>
+        .section {
+            min-height: 100%;
+            padding: 4rem 0;
+            display: none;
+        }
 
-    <!-- Footer Navigation -->
-    <footer class="w-full bg-slate-800 border-t border-slate-700 z-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-            <button id="prev-btn" class="px-4 py-2 bg-slate-700 rounded-md hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">&lt; Anterior</button>
-            <div id="slide-counter" class="text-sm font-medium"></div>
-            <button id="next-btn" class="px-4 py-2 bg-slate-700 rounded-md hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Próximo &gt;</button>
-        </div>
-    </footer>
+        .section.active {
+            display: block;
+        }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const aulaButtons = document.querySelectorAll('.aula-button');
-            const aulaPages = document.querySelectorAll('.aula-page');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const slideCounter = document.getElementById('slide-counter');
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 6rem 0;
+        }
 
-            let currentAula = 1;
-            let currentSlideIndex = 0;
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
 
-            function updateView() {
-                // Hide all pages
-                aulaPages.forEach(page => page.classList.add('hidden'));
-                
-                // Show current page
-                const currentPage = document.querySelector(`.aula-page[data-aula="${currentAula}"]`);
-                if (!currentPage) return;
-                currentPage.classList.remove('hidden');
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
 
-                const slides = currentPage.querySelectorAll('.slide');
-                if (slides.length === 0) return;
+        .cta-button {
+            background: #f59e0b;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-                // Hide all slides in current page
-                slides.forEach((slide, index) => {
-                    if (index === currentSlideIndex) {
-                        slide.classList.add('active');
-                    } else {
-                        slide.classList.remove('active');
-                    }
-                });
+        .cta-button:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+        }
 
-                // Update counter
-                slideCounter.textContent = `${currentSlideIndex + 1} / ${slides.length}`;
+        /* Content Sections */
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
-                // Update buttons
-                prevBtn.disabled = currentSlideIndex === 0;
-                nextBtn.disabled = currentSlideIndex === slides.length - 1;
+        .content-section h2 {
+            color: #4f46e5;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
 
-                // Update active aula button
-                 aulaButtons.forEach(btn => {
-                    btn.classList.remove('active');
-                    if(btn.dataset.aula == currentAula) {
-                        btn.classList.add('active');
-                    }
-                });
+        .content-section h3 {
+            color: #374151;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            border-left: 4px solid #4f46e5;
+            padding-left: 1rem;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            overflow-x: auto;
+        }
+
+        .command {
+            color: #10b981;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .tip-box {
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box h4 {
+            color: #059669;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .nav-btn {
+            background: #4f46e5;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #3730a3;
+        }
+
+        .nav-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
             }
 
-            aulaButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    currentAula = parseInt(button.dataset.aula);
-                    currentSlideIndex = 0;
-                    updateView();
-                });
-            });
+            .hero h1 {
+                font-size: 2.5rem;
+            }
 
-            prevBtn.addEventListener('click', () => {
-                if (currentSlideIndex > 0) {
-                    currentSlideIndex--;
-                    updateView();
-                }
-            });
+            .content-section {
+                padding: 2rem 1rem;
+            }
 
-            nextBtn.addEventListener('click', () => {
-                const slides = document.querySelector(`.aula-page[data-aula="${currentAula}"]`).querySelectorAll('.slide');
-                if (currentSlideIndex < slides.length - 1) {
-                    currentSlideIndex++;
-                    updateView();
-                }
-            });
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <header class="header">
+   <nav class="container">
+    <div class="nav">
+     <div class="logo" id="main-logo">
+      🚀 Git Master
+     </div>
+     <ul class="nav-menu">
+      <li><a class="nav-link" onclick="showSection(0)">Início</a></li>
+      <li><a class="nav-link" onclick="showSection(1)">Instalação</a></li>
+      <li><a class="nav-link" onclick="showSection(2)">Configuração</a></li>
+      <li><a class="nav-link" onclick="showSection(3)">Repositórios</a></li>
+      <li><a class="nav-link" onclick="showSection(4)">Versionamento</a></li>
+      <li><a class="nav-link" onclick="showSection(5)">Alterações</a></li>
+      <li><a class="nav-link" onclick="showSection(6)">Branches</a></li>
+      <li><a class="nav-link" onclick="showSection(7)">Ignorar</a></li>
+      <li><a class="nav-link" onclick="showSection(8)">Correções</a></li>
+      <li><a class="nav-link" onclick="showSection(9)">Remoto</a></li>
+      <li><a class="nav-link" onclick="showSection(10)">Práticas</a></li>
+     </ul>
+    </div>
+   </nav>
+  </header>
+  <main class="main-content"><!-- Seção 0: Hero -->
+   <section class="section active hero" id="section-0">
+    <div class="container">
+     <h1 id="main-title">Guia Completo do Git</h1>
+     <p id="subtitle">Domine o controle de versão e transforme sua produtividade como desenvolvedor</p><button class="cta-button" id="cta-button" onclick="showSection(1)">Começar Agora</button>
+    </div>
+   </section><!-- Seção 1: Instalação -->
+   <section class="section" id="section-1">
+    <div class="container">
+     <div class="content-section">
+      <h2>1. Instalação do Git</h2>
+      <h3>Windows</h3>
+      <p>Baixe o instalador oficial do Git para Windows:</p>
+      <div class="code-block"><span class="command"># Baixe em: https://git-scm.com/download/win</span><br><span class="command"># Ou use o Chocolatey:</span><br>
+        choco install git
+      </div>
+      <h3>macOS</h3>
+      <div class="code-block"><span class="command"># Usando Homebrew:</span><br>
+        brew install git<br><br><span class="command"># Ou baixe em: https://git-scm.com/download/mac</span>
+      </div>
+      <h3>Linux (Ubuntu/Debian)</h3>
+      <div class="code-block"><span class="command"># Atualize os pacotes:</span><br>
+        sudo apt update<br><br><span class="command"># Instale o Git:</span><br>
+        sudo apt install git
+      </div>
+      <h3>Verificar Instalação</h3>
+      <div class="code-block"><span class="command"># Verifique a versão instalada:</span><br>
+        git --version
+      </div>
+      <div class="tip-box">
+       <h4>💡 Dica Importante</h4>
+       <p>Após a instalação, reinicie o terminal para garantir que o Git esteja disponível no PATH do sistema.</p>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(0)">← Início</button> <button class="nav-btn" onclick="showSection(2)">Configuração →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 2: Configuração -->
+   <section class="section" id="section-2">
+    <div class="container">
+     <div class="content-section">
+      <h2>2. Configuração Inicial</h2>
+      <h3>Configuração Global</h3>
+      <p>Configure seu nome e email globalmente:</p>
+      <div class="code-block"><span class="command"># Configure seu nome:</span><br>
+        git config --global user.name "Seu Nome"<br><br><span class="command"># Configure seu email:</span><br>
+        git config --global user.email "seu.email@exemplo.com"
+      </div>
+      <h3>Configurações Úteis</h3>
+      <div class="code-block"><span class="command"># Editor padrão (VS Code):</span><br>
+        git config --global core.editor "code --wait"<br><br><span class="command"># Configurar quebras de linha:</span><br>
+        git config --global core.autocrlf true # Windows<br>
+        git config --global core.autocrlf input # Mac/Linux<br><br><span class="command"># Colorir saída do Git:</span><br>
+        git config --global color.ui auto
+      </div>
+      <h3>Verificar Configurações</h3>
+      <div class="code-block"><span class="command"># Listar todas as configurações:</span><br>
+        git config --list<br><br><span class="command"># Ver configuração específica:</span><br>
+        git config user.name<br>
+        git config user.email
+      </div>
+      <div class="grid">
+       <div class="card">
+        <h4>Configuração Local</h4>
+        <p>Use <span class="highlight">--local</span> para configurar apenas o repositório atual.</p>
+       </div>
+       <div class="card">
+        <h4>Configuração Global</h4>
+        <p>Use <span class="highlight">--global</span> para configurar para todos os repositórios.</p>
+       </div>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(1)">← Instalação</button> <button class="nav-btn" onclick="showSection(3)">Repositórios →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 3: Repositórios -->
+   <section class="section" id="section-3">
+    <div class="container">
+     <div class="content-section">
+      <h2>3. Trabalhando com Repositórios</h2>
+      <h3>Criar um Novo Repositório</h3>
+      <div class="code-block"><span class="command"># Criar pasta e inicializar:</span><br>
+        mkdir meu-projeto<br>
+        cd meu-projeto<br>
+        git init
+      </div>
+      <h3>Clonar um Repositório Existente</h3>
+      <div class="code-block"><span class="command"># Clonar via HTTPS:</span><br>
+        git clone https://github.com/usuario/repositorio.git<br><br><span class="command"># Clonar via SSH:</span><br>
+        git clone git@github.com:usuario/repositorio.git<br><br><span class="command"># Clonar com nome personalizado:</span><br>
+        git clone https://github.com/usuario/repo.git meu-nome
+      </div>
+      <h3>Status do Repositório</h3>
+      <div class="code-block"><span class="command"># Ver status atual:</span><br>
+        git status<br><br><span class="command"># Status resumido:</span><br>
+        git status -s<br><br><span class="command"># Ver histórico:</span><br>
+        git log --oneline
+      </div>
+      <div class="tip-box">
+       <h4>🎯 Estrutura de um Repositório Git</h4>
+       <p><strong>.git/</strong> - Pasta oculta que contém todos os metadados do Git<br><strong>Working Directory</strong> - Seus arquivos de trabalho<br><strong>Staging Area</strong> - Área de preparação para commits<br><strong>Repository</strong> - Histórico de commits</p>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(2)">← Configuração</button> <button class="nav-btn" onclick="showSection(4)">Versionamento →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 4: Versionamento -->
+   <section class="section" id="section-4">
+    <div class="container">
+     <div class="content-section">
+      <h2>4. Versionamento Básico</h2>
+      <h3>Adicionando Arquivos</h3>
+      <div class="code-block"><span class="command"># Adicionar arquivo específico:</span><br>
+        git add arquivo.txt<br><br><span class="command"># Adicionar todos os arquivos:</span><br>
+        git add .<br><br><span class="command"># Adicionar por extensão:</span><br>
+        git add *.js<br><br><span class="command"># Adicionar interativamente:</span><br>
+        git add -i
+      </div>
+      <h3>Fazendo Commits</h3>
+      <div class="code-block"><span class="command"># Commit com mensagem:</span><br>
+        git commit -m "Adiciona funcionalidade de login"<br><br><span class="command"># Commit com add automático:</span><br>
+        git commit -am "Corrige bug na validação"<br><br><span class="command"># Commit com editor:</span><br>
+        git commit
+      </div>
+      <h3>Boas Práticas para Mensagens</h3>
+      <div class="grid">
+       <div class="card">
+        <h4>✅ Boas Mensagens</h4>
+        <ul>
+         <li>"Adiciona validação de email"</li>
+         <li>"Corrige erro de login"</li>
+         <li>"Refatora função de busca"</li>
+         <li>"Remove código não utilizado"</li>
+        </ul>
+       </div>
+       <div class="card">
+        <h4>❌ Mensagens Ruins</h4>
+        <ul>
+         <li>"fix"</li>
+         <li>"mudanças"</li>
+         <li>"atualizações várias"</li>
+         <li>"commit"</li>
+        </ul>
+       </div>
+      </div>
+      <h3>Visualizando Histórico</h3>
+      <div class="code-block"><span class="command"># Log completo:</span><br>
+        git log<br><br><span class="command"># Log resumido:</span><br>
+        git log --oneline<br><br><span class="command"># Log gráfico:</span><br>
+        git log --graph --oneline --all<br><br><span class="command"># Log com estatísticas:</span><br>
+        git log --stat
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(3)">← Repositórios</button> <button class="nav-btn" onclick="showSection(5)">Alterações →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 5: Alterações -->
+   <section class="section" id="section-5">
+    <div class="container">
+     <div class="content-section">
+      <h2>5. Gerenciando Alterações</h2>
+      <h3>Visualizando Diferenças</h3>
+      <div class="code-block"><span class="command"># Ver mudanças não commitadas:</span><br>
+        git diff<br><br><span class="command"># Ver mudanças na staging area:</span><br>
+        git diff --staged<br><br><span class="command"># Comparar commits:</span><br>
+        git diff HEAD~1 HEAD<br><br><span class="command"># Diferenças em arquivo específico:</span><br>
+        git diff arquivo.txt
+      </div>
+      <h3>Desfazendo Alterações</h3>
+      <div class="code-block"><span class="command"># Descartar mudanças no working directory:</span><br>
+        git checkout -- arquivo.txt<br><br><span class="command"># Remover da staging area:</span><br>
+        git reset HEAD arquivo.txt<br><br><span class="command"># Descartar todas as mudanças:</span><br>
+        git checkout .<br><br><span class="command"># Reset completo (cuidado!):</span><br>
+        git reset --hard HEAD
+      </div>
+      <h3>Stash - Guardando Mudanças Temporárias</h3>
+      <div class="code-block"><span class="command"># Guardar mudanças:</span><br>
+        git stash<br><br><span class="command"># Guardar com mensagem:</span><br>
+        git stash save "trabalho em progresso"<br><br><span class="command"># Listar stashes:</span><br>
+        git stash list<br><br><span class="command"># Aplicar último stash:</span><br>
+        git stash pop<br><br><span class="command"># Aplicar stash específico:</span><br>
+        git stash apply stash@{1}
+      </div>
+      <div class="tip-box">
+       <h4>⚠️ Cuidado com Reset</h4>
+       <p><strong>--soft</strong>: Mantém mudanças na staging area<br><strong>--mixed</strong>: Mantém mudanças no working directory<br><strong>--hard</strong>: Remove todas as mudanças (irreversível!)</p>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(4)">← Versionamento</button> <button class="nav-btn" onclick="showSection(6)">Branches →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 6: Branches e Tags -->
+   <section class="section" id="section-6">
+    <div class="container">
+     <div class="content-section">
+      <h2>6. Branches e Tags</h2>
+      <h3>Trabalhando com Branches</h3>
+      <div class="code-block"><span class="command"># Listar branches:</span><br>
+        git branch<br><br><span class="command"># Criar nova branch:</span><br>
+        git branch nova-funcionalidade<br><br><span class="command"># Criar e mudar para branch:</span><br>
+        git checkout -b nova-funcionalidade<br><br><span class="command"># Mudar de branch:</span><br>
+        git checkout main<br><br><span class="command"># Deletar branch:</span><br>
+        git branch -d nome-branch
+      </div>
+      <h3>Merge - Unindo Branches</h3>
+      <div class="code-block"><span class="command"># Fazer merge (estando na branch destino):</span><br>
+        git checkout main<br>
+        git merge nova-funcionalidade<br><br><span class="command"># Merge sem fast-forward:</span><br>
+        git merge --no-ff nova-funcionalidade<br><br><span class="command"># Abortar merge em conflito:</span><br>
+        git merge --abort
+      </div>
+      <h3>Rebase - Reorganizando Histórico</h3>
+      <div class="code-block"><span class="command"># Rebase simples:</span><br>
+        git checkout feature<br>
+        git rebase main<br><br><span class="command"># Rebase interativo:</span><br>
+        git rebase -i HEAD~3<br><br><span class="command"># Continuar rebase após resolver conflitos:</span><br>
+        git rebase --continue
+      </div>
+      <h3>Tags - Marcando Versões</h3>
+      <div class="code-block"><span class="command"># Criar tag simples:</span><br>
+        git tag v1.0.0<br><br><span class="command"># Criar tag anotada:</span><br>
+        git tag -a v1.0.0 -m "Versão 1.0.0"<br><br><span class="command"># Listar tags:</span><br>
+        git tag<br><br><span class="command"># Ver informações da tag:</span><br>
+        git show v1.0.0<br><br><span class="command"># Deletar tag:</span><br>
+        git tag -d v1.0.0
+      </div>
+      <div class="grid">
+       <div class="card">
+        <h4>🔀 Merge vs Rebase</h4>
+        <p><strong>Merge:</strong> Preserva histórico, cria commit de merge<br><strong>Rebase:</strong> Histórico linear, sem commits de merge</p>
+       </div>
+       <div class="card">
+        <h4>🏷️ Tipos de Tags</h4>
+        <p><strong>Lightweight:</strong> Apenas um ponteiro<br><strong>Annotated:</strong> Objeto completo com metadados</p>
+       </div>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(5)">← Alterações</button> <button class="nav-btn" onclick="showSection(7)">Ignorar Arquivos →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 7: Ignorar Arquivos -->
+   <section class="section" id="section-7">
+    <div class="container">
+     <div class="content-section">
+      <h2>7. Ignorando Arquivos</h2>
+      <h3>Arquivo .gitignore</h3>
+      <p>O arquivo <span class="highlight">.gitignore</span> especifica quais arquivos o Git deve ignorar:</p>
+      <div class="code-block"><span class="command"># Criar .gitignore:</span><br>
+        touch .gitignore<br><br><span class="command"># Exemplo de conteúdo:</span><br>
+        # Dependências<br>
+        node_modules/<br>
+        vendor/<br><br>
+        # Arquivos de build<br>
+        dist/<br>
+        build/<br><br>
+        # Arquivos de ambiente<br>
+        .env<br>
+        .env.local<br><br>
+        # Logs<br>
+        *.log<br>
+        logs/<br><br>
+        # Arquivos do sistema<br>
+        .DS_Store<br>
+        Thumbs.db
+      </div>
+      <h3>Padrões Comuns</h3>
+      <div class="grid">
+       <div class="card">
+        <h4>Node.js</h4>
+        <div class="code-block">
+         node_modules/<br>
+          npm-debug.log<br>
+          .env<br>
+          dist/
+        </div>
+       </div>
+       <div class="card">
+        <h4>Python</h4>
+        <div class="code-block">
+         __pycache__/<br>
+          *.pyc<br>
+          .venv/<br>
+          .pytest_cache/
+        </div>
+       </div>
+       <div class="card">
+        <h4>Java</h4>
+        <div class="code-block">
+         *.class<br>
+          target/<br>
+          .gradle/<br>
+          build/
+        </div>
+       </div>
+       <div class="card">
+        <h4>IDEs</h4>
+        <div class="code-block">
+         .vscode/<br>
+          .idea/<br>
+          *.swp<br>
+          *.swo
+        </div>
+       </div>
+      </div>
+      <h3>Comandos Úteis</h3>
+      <div class="code-block"><span class="command"># Ver arquivos ignorados:</span><br>
+        git status --ignored<br><br><span class="command"># Forçar adicionar arquivo ignorado:</span><br>
+        git add -f arquivo-ignorado.txt<br><br><span class="command"># Remover arquivo já commitado:</span><br>
+        git rm --cached arquivo.txt<br><br><span class="command"># Verificar por que arquivo está sendo ignorado:</span><br>
+        git check-ignore -v arquivo.txt
+      </div>
+      <div class="tip-box">
+       <h4>🎯 Dicas Importantes</h4>
+       <p>• O .gitignore só afeta arquivos não rastreados<br>
+         • Use <strong>git rm --cached</strong> para parar de rastrear arquivos já commitados<br>
+         • Crie .gitignore antes de fazer o primeiro commit<br>
+         • Use templates do GitHub para linguagens específicas</p>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(6)">← Branches</button> <button class="nav-btn" onclick="showSection(8)">Correções →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 8: Corrigir Erros -->
+   <section class="section" id="section-8">
+    <div class="container">
+     <div class="content-section">
+      <h2>8. Corrigindo Erros</h2>
+      <h3>Corrigindo o Último Commit</h3>
+      <div class="code-block"><span class="command"># Alterar mensagem do último commit:</span><br>
+        git commit --amend -m "Nova mensagem"<br><br><span class="command"># Adicionar arquivos ao último commit:</span><br>
+        git add arquivo-esquecido.txt<br>
+        git commit --amend --no-edit<br><br><span class="command"># Alterar autor do último commit:</span><br>
+        git commit --amend --author="Nome &lt;email@exemplo.com&gt;"
+      </div>
+      <h3>Revertendo Commits</h3>
+      <div class="code-block"><span class="command"># Reverter commit específico:</span><br>
+        git revert &lt;hash-do-commit&gt;<br><br><span class="command"># Reverter sem criar commit:</span><br>
+        git revert --no-commit &lt;hash-do-commit&gt;<br><br><span class="command"># Reverter merge:</span><br>
+        git revert -m 1 &lt;hash-do-merge&gt;
+      </div>
+      <h3>Reset - Voltando no Tempo</h3>
+      <div class="code-block"><span class="command"># Reset soft (mantém mudanças staged):</span><br>
+        git reset --soft HEAD~1<br><br><span class="command"># Reset mixed (mantém mudanças unstaged):</span><br>
+        git reset HEAD~1<br><br><span class="command"># Reset hard (remove tudo - cuidado!):</span><br>
+        git reset --hard HEAD~1<br><br><span class="command"># Reset para commit específico:</span><br>
+        git reset --hard &lt;hash-do-commit&gt;
+      </div>
+      <h3>Resolvendo Conflitos</h3>
+      <div class="code-block"><span class="command"># Ver arquivos em conflito:</span><br>
+        git status<br><br><span class="command"># Após resolver conflitos:</span><br>
+        git add arquivo-resolvido.txt<br>
+        git commit<br><br><span class="command"># Usar ferramenta de merge:</span><br>
+        git mergetool<br><br><span class="command"># Abortar merge:</span><br>
+        git merge --abort
+      </div>
+      <h3>Recuperando Trabalho Perdido</h3>
+      <div class="code-block"><span class="command"># Ver histórico de referências:</span><br>
+        git reflog<br><br><span class="command"># Recuperar commit "perdido":</span><br>
+        git checkout &lt;hash-do-reflog&gt;<br>
+        git checkout -b recuperacao<br><br><span class="command"># Encontrar commits órfãos:</span><br>
+        git fsck --lost-found
+      </div>
+      <div class="tip-box">
+       <h4>⚠️ Cuidados Importantes</h4>
+       <p><strong>Nunca use --hard em trabalho não salvo!</strong><br><strong>Evite reescrever histórico público</strong><br><strong>Sempre faça backup antes de operações destrutivas</strong><br><strong>Use revert em vez de reset para commits públicos</strong></p>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(7)">← Ignorar Arquivos</button> <button class="nav-btn" onclick="showSection(9)">Repositório Remoto →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 9: Repositório Remoto -->
+   <section class="section" id="section-9">
+    <div class="container">
+     <div class="content-section">
+      <h2>9. Repositório Remoto</h2>
+      <h3>Configurando Remotos</h3>
+      <div class="code-block"><span class="command"># Adicionar remoto:</span><br>
+        git remote add origin https://github.com/usuario/repo.git<br><br><span class="command"># Listar remotos:</span><br>
+        git remote -v<br><br><span class="command"># Alterar URL do remoto:</span><br>
+        git remote set-url origin git@github.com:usuario/repo.git<br><br><span class="command"># Remover remoto:</span><br>
+        git remote remove origin
+      </div>
+      <h3>Push - Enviando Alterações</h3>
+      <div class="code-block"><span class="command"># Push inicial:</span><br>
+        git push -u origin main<br><br><span class="command"># Push normal:</span><br>
+        git push<br><br><span class="command"># Push de branch específica:</span><br>
+        git push origin feature-branch<br><br><span class="command"># Push de tags:</span><br>
+        git push --tags<br><br><span class="command"># Push forçado (cuidado!):</span><br>
+        git push --force-with-lease
+      </div>
+      <h3>Pull - Recebendo Alterações</h3>
+      <div class="code-block"><span class="command"># Pull (fetch + merge):</span><br>
+        git pull<br><br><span class="command"># Pull com rebase:</span><br>
+        git pull --rebase<br><br><span class="command"># Pull de branch específica:</span><br>
+        git pull origin main<br><br><span class="command"># Apenas baixar (sem merge):</span><br>
+        git fetch<br>
+        git merge origin/main
+      </div>
+      <h3>Trabalhando com Forks</h3>
+      <div class="code-block"><span class="command"># Adicionar upstream:</span><br>
+        git remote add upstream https://github.com/original/repo.git<br><br><span class="command"># Sincronizar com upstream:</span><br>
+        git fetch upstream<br>
+        git checkout main<br>
+        git merge upstream/main<br><br><span class="command"># Push para seu fork:</span><br>
+        git push origin main
+      </div>
+      <div class="grid">
+       <div class="card">
+        <h4>🔄 Pull vs Fetch</h4>
+        <p><strong>Pull:</strong> Baixa e faz merge automaticamente<br><strong>Fetch:</strong> Apenas baixa, você controla o merge</p>
+       </div>
+       <div class="card">
+        <h4>🌿 Estratégias de Branch</h4>
+        <p><strong>Git Flow:</strong> main, develop, feature, release<br><strong>GitHub Flow:</strong> main + feature branches</p>
+       </div>
+      </div>
+      <div class="tip-box">
+       <h4>🔐 Autenticação</h4>
+       <p><strong>HTTPS:</strong> Use tokens pessoais (não senhas)<br><strong>SSH:</strong> Configure chaves SSH para maior segurança<br><strong>2FA:</strong> Sempre ative autenticação de dois fatores</p>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(8)">← Correções</button> <button class="nav-btn" onclick="showSection(10)">Boas Práticas →</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Seção 10: Boas Práticas -->
+   <section class="section" id="section-10">
+    <div class="container">
+     <div class="content-section">
+      <h2>10. Boas Práticas</h2>
+      <h3>Commits Eficazes</h3>
+      <div class="grid">
+       <div class="card">
+        <h4>✅ Faça</h4>
+        <ul>
+         <li>Commits pequenos e focados</li>
+         <li>Mensagens claras e descritivas</li>
+         <li>Use tempo presente imperativo</li>
+         <li>Teste antes de commitar</li>
+         <li>Commit frequentemente</li>
+        </ul>
+       </div>
+       <div class="card">
+        <h4>❌ Evite</h4>
+        <ul>
+         <li>Commits gigantes com muitas mudanças</li>
+         <li>Mensagens vagas como "fix" ou "update"</li>
+         <li>Commitar código que não funciona</li>
+         <li>Misturar refatoração com novas features</li>
+         <li>Commitar arquivos temporários</li>
+        </ul>
+       </div>
+      </div>
+      <h3>Estrutura de Mensagens</h3>
+      <div class="code-block"><span class="command"># Formato recomendado:</span><br>
+        tipo(escopo): descrição curta<br><br>
+        Descrição mais detalhada se necessário.<br><br>
+        - Mudança específica 1<br>
+        - Mudança específica 2<br><br>
+        Closes #123
+      </div>
+      <h3>Tipos de Commit</h3>
+      <div class="grid">
+       <div class="card">
+        <h4>🆕 feat</h4>
+        <p>Nova funcionalidade</p>
+       </div>
+       <div class="card">
+        <h4>🐛 fix</h4>
+        <p>Correção de bug</p>
+       </div>
+       <div class="card">
+        <h4>📚 docs</h4>
+        <p>Documentação</p>
+       </div>
+       <div class="card">
+        <h4>💄 style</h4>
+        <p>Formatação, espaços</p>
+       </div>
+       <div class="card">
+        <h4>♻️ refactor</h4>
+        <p>Refatoração de código</p>
+       </div>
+       <div class="card">
+        <h4>✅ test</h4>
+        <p>Adição de testes</p>
+       </div>
+      </div>
+      <h3>Workflow Recomendado</h3>
+      <div class="code-block"><span class="command"># 1. Sempre comece atualizando:</span><br>
+        git pull origin main<br><br><span class="command"># 2. Crie branch para nova feature:</span><br>
+        git checkout -b feature/nova-funcionalidade<br><br><span class="command"># 3. Trabalhe e commite frequentemente:</span><br>
+        git add .<br>
+        git commit -m "feat: adiciona validação de email"<br><br><span class="command"># 4. Push da branch:</span><br>
+        git push -u origin feature/nova-funcionalidade<br><br><span class="command"># 5. Abra Pull Request no GitHub</span><br><span class="command"># 6. Após aprovação, faça merge e delete branch</span>
+      </div>
+      <h3>Segurança e Backup</h3>
+      <div class="tip-box">
+       <h4>🔒 Dicas de Segurança</h4>
+       <p>• Nunca commite senhas, tokens ou chaves API<br>
+         • Use .gitignore para arquivos sensíveis<br>
+         • Configure autenticação de dois fatores<br>
+         • Use SSH keys em vez de HTTPS quando possível<br>
+         • Faça backup regular dos repositórios importantes</p>
+      </div>
+      <h3>Ferramentas Úteis</h3>
+      <div class="grid">
+       <div class="card">
+        <h4>🎨 Git GUIs</h4>
+        <ul>
+         <li>GitKraken</li>
+         <li>SourceTree</li>
+         <li>GitHub Desktop</li>
+         <li>VS Code Git</li>
+        </ul>
+       </div>
+       <div class="card">
+        <h4>🔧 Aliases Úteis</h4>
+        <div class="code-block">
+         git config --global alias.st status<br>
+          git config --global alias.co checkout<br>
+          git config --global alias.br branch<br>
+          git config --global alias.cm commit
+        </div>
+       </div>
+      </div>
+      <div class="navigation-buttons"><button class="nav-btn" onclick="showSection(9)">← Repositório Remoto</button> <button class="nav-btn" onclick="showSection(0)">🏠 Início</button>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main>
+  <script>
+        const defaultConfig = {
+            main_title: "Guia Completo do Git",
+            subtitle: "Domine o controle de versão e transforme sua produtividade como desenvolvedor",
+            cta_button: "Começar Agora"
+        };
 
-            // Initial view
-            updateView();
+        let currentSection = 0;
+        const totalSections = 11;
+
+        function showSection(sectionIndex) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show target section
+            const targetSection = document.getElementById(`section-${sectionIndex}`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                currentSection = sectionIndex;
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig: defaultConfig,
+                onConfigChange: async (config) => {
+                    const mainTitle = document.getElementById('main-title');
+                    const subtitle = document.getElementById('subtitle');
+                    const ctaButton = document.getElementById('cta-button');
+                    
+                    if (mainTitle) {
+                        mainTitle.textContent = config.main_title || defaultConfig.main_title;
+                    }
+                    if (subtitle) {
+                        subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+                    }
+                    if (ctaButton) {
+                        ctaButton.textContent = config.cta_button || defaultConfig.cta_button;
+                    }
+                },
+                mapToCapabilities: (config) => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ["main_title", config.main_title || defaultConfig.main_title],
+                    ["subtitle", config.subtitle || defaultConfig.subtitle],
+                    ["cta_button", config.cta_button || defaultConfig.cta_button]
+                ])
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentSection > 0) {
+                showSection(currentSection - 1);
+            } else if (e.key === 'ArrowRight' && currentSection < totalSections - 1) {
+                showSection(currentSection + 1);
+            }
         });
     </script>
-</body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'998d4335b5f00bc1',t:'MTc2MjE4NzQ5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
-
